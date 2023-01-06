@@ -8,27 +8,56 @@
 </head>
   <body>
     <!-- Кнопка для активации функции -->
-    <button id="activate-button">Activate Orientation Lock</button>
+       <!-- Элемент, который будет открываться в полноэкранном режиме -->
+    <div id="fullscreen-element">
+      <p>This element will be opened in fullscreen mode</p>
+    </div>
+
+    <!-- Кнопка для открытия элемента в полноэкранном режиме -->
+    <button id="fullscreen-button">Open in Fullscreen</button>
+      
+          <!-- Кнопка для блокировки экрана -->
+    <button id="lock-button">Lock Orientation</button>
 
     <script>
-      // Функция для блокировки альбомной ориентации экрана
-      const lockOrientation = () => {
-        // Проверяем, поддерживает ли устройство блокировку ориентации
-        if (screen.orientation.lock) {
-          // Блокируем альбомную ориентацию
-          screen.orientation.lock("portrait").then(() => {
-            console.log("Orientation locked to portrait");
-          }).catch((error) => {
-            console.error("Error locking orientation:", error);
-          });
-        } else {
-          console.error("Orientation lock is not supported on this device");
+         // Функция для открытия элемента в полноэкранном режиме
+      const openFullscreen = (element) => {
+        // Проверяем, поддерживает ли устройство полноэкранный режим
+        if (element.requestFullscreen) {
+          element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+          element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+          element.msRequestFullscreen();
         }
       };
 
-      // Назначаем функцию lockOrientation на кнопку
-      const button = document.getElementById("activate-button");
-      button.addEventListener("click", lockOrientation);
+      // Назначаем функцию openFullscreen на кнопку
+      const button = document.getElementById("fullscreen-button");
+      const element = document.getElementById("fullscreen-element");
+      button.addEventListener("click", () => openFullscreen(element));
+        
+            // Функция для блокировки экрана
+      const lockScreen = () => {
+        // Проверяем, поддерживает ли устройство блокировку экрана
+        if (screen.orientation.lock) {
+          // Блокируем экран
+          screen.orientation.lock().then(() => {
+            console.log("Screen locked");
+          }).catch((error) => {
+            console.error("Error locking screen:", error);
+          });
+        } else {
+          console.error("Screen lock is not supported on this device");
+        }
+      };
+
+      // Назначаем функцию lockScreen на кнопку
+      const button = document.getElementById("lock-button");
+      button.addEventListener("click", lockScreen);
+        
     </script>
   </body>
 </html>
