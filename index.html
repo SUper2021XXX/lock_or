@@ -7,19 +7,37 @@
 </head>
 <body>
   <h1>Landscape Orientation Lock</h1>
-
+  <button id="lockOrientationButton">Lock Orientation and Enter Fullscreen</button>
   <script>
-    if (screen.orientation.lock) {
-  screen.orientation.lock('landscape')
-    .then(function () {
-      console.log('Orientation locked to landscape');
-    })
-    .catch(function (error) {
-      console.error('Error locking orientation:', error);
-    });
-} else {
-  console.warn('screen.orientation.lock is not supported');
-}
+document.getElementById('lockOrientationButton').addEventListener('click', function () {
+  // Lock the orientation to landscape
+  if (screen.orientation.lock) {
+    screen.orientation.lock('landscape')
+      .then(function () {
+        console.log('Orientation locked to landscape');
+      })
+      .catch(function (error) {
+        console.error('Error locking orientation:', error);
+      });
+  } else {
+    console.warn('screen.orientation.lock is not supported');
+  }
+
+  // Enter fullscreen mode
+  var element = document.documentElement;
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else {
+    console.warn('Fullscreen mode is not supported');
+  }
+});
+
   </script>
 </body>
 </html>
