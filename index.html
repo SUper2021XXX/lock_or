@@ -2,15 +2,24 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height, user-scalable=no, minimal-ui, viewport-fit=cover">
   <title>Landscape Orientation Lock</title>
 </head>
 <body>
   <h1>Landscape Orientation Lock</h1>
 
   <script>
-    // Lock the orientation to landscape
-    screen.orientation.lock('landscape');
+    if (screen.orientation.lock) {
+  screen.orientation.lock('landscape')
+    .then(function () {
+      console.log('Orientation locked to landscape');
+    })
+    .catch(function (error) {
+      console.error('Error locking orientation:', error);
+    });
+} else {
+  console.warn('screen.orientation.lock is not supported');
+}
   </script>
 </body>
 </html>
