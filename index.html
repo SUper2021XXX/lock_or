@@ -1,21 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <button id="myButton">Lock Orientation</button>
+<html>
+  <head>
+    <title>Orientation Lock Demo</title>
+  </head>
+  <body>
+    <!-- Кнопка для активации функции -->
+    <button id="activate-button">Activate Orientation Lock</button>
+
     <script>
-        document.getElementById('myButton').addEventListener('click', function() {
-  window.screen.orientation.lock('portrait').then(function success() {
-    console.log("Orientation locked to portrait in Safari on iPhone");
-  }, function error(errMsg) {
-    console.log("Error locking orientation: ", errMsg);
-  });
-});
+      // Функция для блокировки альбомной ориентации экрана
+      const lockOrientation = () => {
+        // Проверяем, поддерживает ли устройство блокировку ориентации
+        if (screen.orientation.lock) {
+          // Блокируем альбомную ориентацию
+          screen.orientation.lock("portrait").then(() => {
+            console.log("Orientation locked to portrait");
+          }).catch((error) => {
+            console.error("Error locking orientation:", error);
+          });
+        } else {
+          console.error("Orientation lock is not supported on this device");
+        }
+      };
+
+      // Назначаем функцию lockOrientation на кнопку
+      const button = document.getElementById("activate-button");
+      button.addEventListener("click", lockOrientation);
     </script>
-</body>
+  </body>
 </html>
